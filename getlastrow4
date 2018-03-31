@@ -4,8 +4,8 @@ End Sub
 
 Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As Long
   LastRow = WS.UsedRange.Row + WS.UsedRange.Rows.Count - 1
-  getLastRow = LastRow
-    
+  getLastRow = 0
+ 
   For C = LastRow To 1 Step -1
    If WS.Cells(C, CheckCol).Value <> "" Then
     getLastRow = C
