@@ -1,0 +1,15 @@
+Sub 最終行取得テスト()
+  MsgBox getLastRow(ActiveSheet)
+End Sub
+
+Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As Long
+  LastRow = WS.UsedRange.Row + WS.UsedRange.Rows.Count - 1
+  getLastRow = LastRow
+    
+  For C = LastRow To 1 Step -1
+   If WS.Cells(C, CheckCol).Value <> "" Then
+    getLastRow = C
+    Exit For
+   End If
+  Next
+End Function
