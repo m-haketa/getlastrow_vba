@@ -3,14 +3,16 @@ Sub 最終行取得テスト()
 End Sub
 
 Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As Long
-  With WS
+ With WS
+  getLastRow = 0
+  
+  Set R = Intersect(.UsedRange, .Columns(CheckCol))
+  If Not R Is Nothing Then
    LastRow1 = .Cells(.Cells.Rows.Count, CheckCol).End(xlUp).Row
-   LastRow2 = .UsedRange.Row + .UsedRange.Rows.Count - 1
-   getLastRow = LastRow1
-   
+   LastRow2 = R.Row + R.Rows.Count - 1
+    
    If LastRow1 < LastRow2 Then
     Buf = .Range(.Cells(LastRow1, CheckCol), .Cells(LastRow2, CheckCol)).Value
-    
     For C = UBound(Buf, 1) To LBound(Buf, 1) Step -1
      If Buf(C, 1) <> "" Then
       getLastRow = LastRow1 + C - LBound(Buf, 1)
@@ -18,5 +20,6 @@ Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As L
      End If
     Next
    End If
-  End With
+  End If
+ End With
 End Function
