@@ -5,20 +5,19 @@ End Sub
 Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As Long
  With WS
   getLastRow = 0
-  
-  Set R = Intersect(.UsedRange, .Columns(CheckCol))
-  If Not R Is Nothing Then
-   LastRow1 = .Cells(.Cells.Rows.Count, CheckCol).End(xlUp).Row
-   LastRow2 = R.Row + R.Rows.Count - 1
-    
-   If LastRow1 < LastRow2 Then
-    Buf = .Range(.Cells(LastRow1, CheckCol), .Cells(LastRow2, CheckCol)).Value
-    For C = UBound(Buf, 1) To LBound(Buf, 1) Step -1
+  If Not Intersect(.UsedRange, .Columns(CheckCol)) Is Nothing Then
+   LastRow = .UsedRange.Row + .UsedRange.Rows.Count - 1
+   
+   If LastRow > 1 Then
+    Buf = .Range(.Cells(1, CheckCol), .Cells(LastRow, CheckCol)).Value
+    For C = UBound(Buf, 1) To 1 Step -1
      If Buf(C, 1) <> "" Then
-      getLastRow = LastRow1 + C - LBound(Buf, 1)
-      Exit For
+      getLastRow = C
+      Exit Function
      End If
     Next
+   ElseIf .Cells(1, CheckCol).Value <> "" Then
+     getLastRow = 1
    End If
   End If
  End With
