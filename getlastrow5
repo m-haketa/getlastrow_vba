@@ -2,7 +2,6 @@ Sub 最終行取得テスト()
   MsgBox getLastRow(ActiveSheet)
 End Sub
 
-
 Private Function getLastRow(WS As Worksheet, Optional CheckCol As Long = 1) As Long
  With WS
   getLastRow = 0
